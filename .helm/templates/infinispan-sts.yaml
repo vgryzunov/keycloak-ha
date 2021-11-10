@@ -8,6 +8,7 @@ metadata:
   name: infinispan-server
 spec:
   replicas: {{ .Values.replicas }}
+  serviceName: {{ include "keycloak.fullname" . }}-infinispan
   selector:
     matchLabels:
       run: infinispan-server
