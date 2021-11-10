@@ -41,7 +41,7 @@ spec:
     spec:
       initContainers:
       - name: init-certs
-{{ tuple "openssl" . | include "werf_container_image" | indent 8 }}
+        image: {{ .Values.werf.image.openssl }}
         command:
           - "/bin/sh"
           - "-c"
@@ -63,7 +63,7 @@ spec:
                 command: ["/bin/sh", "-c", "sleep 30; kill -QUIT 1"]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-{{ tuple "keycloak" . | include "werf_container_image" | indent 10 }}
+          image: {{ .Values.werf.image.keycloak }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
           args:

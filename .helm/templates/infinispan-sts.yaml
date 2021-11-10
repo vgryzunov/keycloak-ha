@@ -24,7 +24,7 @@ spec:
         - name: registrysecret
       initContainers:
       - name: init-certs
-{{ tuple "openssl" . | include "werf_container_image" | indent 8 }}
+        image: {{ .Values.werf.image.openssl }}
         command:
           - "/bin/sh"
           - "-c"
@@ -56,7 +56,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-{{ tuple "infinispan" . | include "werf_container_image" | indent 8 }}
+        image: {{ .Values.werf.image.infinispan }}
         name: infinispan-server
         ports:
         - containerPort: 8080
