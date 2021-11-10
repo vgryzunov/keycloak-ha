@@ -16,3 +16,10 @@ This repo is intended to be used as a playground for a corresponding article:
   with Infinispan that will have a newer version of the PostgreSQL driver
   (required for CockroachDB);
 * `jar` — JAR files used in `werf.yaml`.
+
+https://werf.io/documentation/v1.2/whats_new_in_v1_2/how_to_migrate_from_v1_1_to_v1_2.html
+
+werf converge --repo=<repo> --env=dev --dev
+
+werf dismiss --env=dev
+
