@@ -26,7 +26,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config-startup: {{ include (print .Template.BasePath "/configmap-standalone.yaml") . | sha256sum }}
+        checksum/config-startup: {{ include (print .Template.BasePath "/keycloak-cm.yaml") . | sha256sum }}
         {{- range $key, $value := .Values.podAnnotations }}
         {{- printf "%s: %s" $key (tpl $value $ | quote) | nindent 8 }}
         {{- end }}
