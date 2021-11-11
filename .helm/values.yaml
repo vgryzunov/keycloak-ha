@@ -1,13 +1,13 @@
 db:
   host: 
-    _default: "cockroachdb-%s-public.cockroachdb-%s"
+    _default: "postgresql.192.168.200.12.nip.io"
   password:
-    _default: "pass123"
+    _default: "password"
     production: "PaSS123+"
 
 keycloak:
   password:
-    _default: "pass123"
+    _default: "password"
     production: "PaSS123+"
 
 infinispan:
@@ -40,7 +40,7 @@ infinispan:
   
 ingress:
   host:
-    _default: dev.exampple.com
+    _default: keycloak.192.168.99.102.nip.io
     production: example.com
 
 java:
