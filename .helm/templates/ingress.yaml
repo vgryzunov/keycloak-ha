@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Chart.Name }}
@@ -38,9 +38,12 @@ spec:
     http:
       paths:
       - path: /auth/
+        pathType: Prefix
         backend:
-          serviceName: {{ include "keycloak.fullname" . }}-http
-          servicePort: {{ .Values.service.httpPort }}
+          service:
+            name: {{ include "keycloak.fullname" . }}-http
+            port:
+              number: {{ .Values.service.httpPort }}
   tls:
   - hosts:
     - {{ pluck .Values.global.env .Values.ingress.host | first | default .Values.ingress.host._default | quote }}
