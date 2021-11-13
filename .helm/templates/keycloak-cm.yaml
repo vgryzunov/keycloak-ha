@@ -145,7 +145,7 @@ data:
             <subsystem xmlns="urn:jboss:domain:datasources:6.0">
                 <datasources>
                     <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true" use-ccm="true">
-                        <connection-url>jdbc:postgresql://${env.DB_ADDR:postgres}/${env.DB_DATABASE:keycloak}${env.JDBC_PARAMS:}</connection-url>
+                        <connection-url>jdbc:postgresql://${env.DB_ADDR:postgres}/${env.DB_DATABASE:keycloak}</connection-url>
                         <driver>postgresql</driver>
                         <pool>
                             <flush-strategy>IdleConnections</flush-strategy>

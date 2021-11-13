@@ -35,6 +35,8 @@ spec:
           value: "dns.DNS_PING"
         - name: JGROUPS_DISCOVERY_PROPERTIES
           value: dns_query={{ ( printf "infinispan-headless.keycloak-%s.svc.cluster.local" .Values.werf.env ) }}
+        - name: JGROUPS_DISCOVERY_QUERY
+          value: "{{ template "keycloak.fullname". }}-headless.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}"
         - name: OPENSHIFT_KUBE_PING_NAMESPACE
           valueFrom:
             fieldRef:

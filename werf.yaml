@@ -7,8 +7,8 @@ deploy:
 image: keycloak
 from: jboss/keycloak:12.0.4
 git:
-- add: /jar/keycloak-metrics-spi-2.2.0.jar
-  to: /opt/jboss/keycloak/standalone/deployments/keycloak-metrics-spi-2.2.0.jar
+  - add: /jar/keycloak-metrics-spi-2.2.0.jar
+    to: /opt/jboss/keycloak/standalone/deployments/keycloak-metrics-spi-2.2.0.jar
 shell:
   setup: |
     chown -R jboss:root /opt/jboss/keycloak/standalone/deployments/
@@ -22,3 +22,5 @@ git:
 shell:
   setup: |
     chown -R 185:root /opt/infinispan/server/lib/
+    sed -i 's+<AppenderRef ref="STDOUT" level="INFO"/>+<AppenderRef ref="STDOUT" level="DEBUG"/>+g' /opt/infinispan/server/conf/log4j2.xml
+    sed -i 's+<Root level="INFO">+<Root level="DEBUG">+g' /opt/infinispan/server/conf/log4j2.xml
