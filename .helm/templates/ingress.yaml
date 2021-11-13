@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffer-size: 64k
     nginx.ingress.kubernetes.io/proxy-buffering: "on"
     nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
-{{- if eq .Values.global.env "production" }}
+{{- if eq .Values.werf.env "production" }}
     nginx.ingress.kubernetes.io/server-snippet: | 
       set_real_ip_from 103.21.244.0/22;
       set_real_ip_from 103.22.200.0/22;
@@ -34,7 +34,7 @@ metadata:
 {{- end }}   
 spec:
   rules:
-  - host: {{ pluck .Values.global.env .Values.ingress.host | first | default .Values.ingress.host._default | quote }}
+  - host: {{ pluck .Values.werf.env .Values.ingress.host | first | default .Values.ingress.host._default | quote }}
     http:
       paths:
       - path: /auth/
@@ -46,5 +46,5 @@ spec:
               number: {{ .Values.service.httpPort }}
   tls:
   - hosts:
-    - {{ pluck .Values.global.env .Values.ingress.host | first | default .Values.ingress.host._default | quote }}
+    - {{ pluck .Values.werf.env .Values.ingress.host | first | default .Values.ingress.host._default | quote }}
     secretName: wildcard-crt

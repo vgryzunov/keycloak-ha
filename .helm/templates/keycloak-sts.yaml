@@ -33,28 +33,12 @@ spec:
       labels:
         {{- include "keycloak.selectorLabels" . | nindent 8 }}
         {{- if and .Values.postgresql.enabled (and .Values.postgresql.networkPolicy .Values.postgresql.networkPolicy.enabled) }}
-        {{ include "keycloak.postgresql.fullname" . }}-client: "true"
+        {{ include "keycloak.postgresql.fullname" . }} -client: "true"
         {{- end }}
         {{- range $key, $value := .Values.podLabels }}
         {{- printf "%s: %s" $key (tpl $value $ | quote) | nindent 8 }}
         {{- end }}
     spec:
-      initContainers:
-      - name: init-certs
-        image: {{ .Values.werf.image.openssl }}
-        command:
-          - "/bin/sh"
-          - "-c"
-        args:
-          - "cp /cockroach/* /cockroach-certs/; cd /cockroach-certs/; openssl pkcs8 -topk8 -inform PEM -in client.${CLIENT}.key -outform DER -out client.${CLIENT}.pk8 -v1 PBE-MD5-DES -nocrypt; chown -R 1000:0 /cockroach-certs/"
-        env:
-          - name: CLIENT
-            value: keycloak
-        volumeMounts:
-          - name: certs
-            mountPath: /cockroach/
-          - name: converted-certs
-            mountPath: /cockroach-certs/
       containers:
         - name: keycloak
           lifecycle:
@@ -125,12 +109,8 @@ spec:
             {{- tpl . $ | nindent 12 }}
           {{- end }}
           resources:
-{{ toYaml (first (pluck .Values.global.env .Values.resources) | default .Values.resources._default) | indent 12 }}
+{{ toYaml (first (pluck .Values.werf.env .Values.resources) | default .Values.resources._default) | indent 12 }}
           volumeMounts:
-            - name: certs
-              mountPath: /cockroach/
-            - name: converted-certs
-              mountPath: /cockroach-certs/
             - name: standalone
               mountPath: /opt/jboss/keycloak/standalone/configuration/standalone-ha.xml
               subPath: standalone.xml
@@ -165,20 +145,3 @@ spec:
           configMap:
             name: {{ include "keycloak.fullname" . }}-standalone
             defaultMode: 0666
-        - name: certs
-          projected:
-            sources:
-            - secret:
-                name: cockroachdb-keycloak
-                items:
-                - key: ca.crt
-                  path: ca.crt
-                  mode: 0400
-                - key: tls.crt
-                  path: client.keycloak.crt
-                  mode: 0400
-                - key: tls.key
-                  path: client.keycloak.key
-                  mode: 0400
-        - name: converted-certs
-          emptyDir: {}

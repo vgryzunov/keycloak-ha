@@ -1,5 +1,5 @@
 {{ define "toleration" }}
-{{ if eq .Values.global.env "production" }}
+{{ if eq .Values.werf.env "production" }}
 tolerations:
 - key: "dedicated"
   operator: "Equal"

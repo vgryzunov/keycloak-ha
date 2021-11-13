@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  annotations:
   labels:
     run: infinispan-server
     {{- include "keycloak.labels" . | nindent 4 }}
@@ -23,22 +22,6 @@ spec:
     spec:
       imagePullSecrets:
         - name: registrysecret
-      initContainers:
-      - name: init-certs
-        image: {{ .Values.werf.image.openssl }}
-        command:
-          - "/bin/sh"
-          - "-c"
-        args:
-          - "cp /cockroach/* /cockroach-certs/; cd /cockroach-certs/; openssl pkcs8 -topk8 -inform PEM -in client.${CLIENT}.key -outform DER -out client.${CLIENT}.pk8 -v1 PBE-MD5-DES -nocrypt; chmod -R 777 /cockroach-certs/"
-        env:
-          - name: CLIENT
-            value: keycloak
-        volumeMounts:
-          - name: certs
-            mountPath: /cockroach/
-          - name: converted-certs
-            mountPath: /cockroach-certs/
       containers:
       - args:
         - /opt/infinispan/bin/server.sh
@@ -51,7 +34,7 @@ spec:
         - name: JGROUPS_DISCOVERY_PROTOCOL
           value: "dns.DNS_PING"
         - name: JGROUPS_DISCOVERY_PROPERTIES
-          value: dns_query={{ ( printf "infinispan-headless.keycloak-%s.svc.cluster.local" .Values.global.env ) }}
+          value: dns_query={{ ( printf "infinispan-headless.keycloak-%s.svc.cluster.local" .Values.werf.env ) }}
         - name: OPENSHIFT_KUBE_PING_NAMESPACE
           valueFrom:
             fieldRef:

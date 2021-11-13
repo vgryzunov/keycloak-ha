@@ -1,13 +1,16 @@
 db:
   host: 
-    _default: "postgres.10.77.3.117.nip.io"
+    _default: "postgres.192.168.200.12.nip.io"
+    dev: "postgres.192.168.200.12.nip.io"
   password:
     _default: "password"
+    dev: "password"
     production: "PaSS123+"
 
 keycloak:
   password:
     _default: "password"
+    dev: "password"
     production: "PaSS123+"
 
 infinispan:
@@ -40,7 +43,7 @@ infinispan:
   
 ingress:
   host:
-    _default: keycloak-ha.192.168.49.2.nip.io
+    _default: keycloak-ha.192.168.99.102.nip.io
     production: example.com
 
 java:
@@ -54,7 +57,7 @@ fullnameOverride: ""
 nameOverride: ""
 
 # The number of replicas to create
-replicas: 3
+replicas: 1
 
 image:
   # The Keycloak image repository

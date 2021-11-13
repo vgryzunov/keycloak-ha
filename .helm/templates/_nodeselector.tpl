@@ -1,5 +1,5 @@
 {{ define "nodeselector" }}
-{{ if eq .Values.global.env "production" }}
+{{ if eq .Values.werf.env "production" }}
 nodeSelector:
   node-role/production: ""
 {{ else }}

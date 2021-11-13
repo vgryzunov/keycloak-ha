@@ -13,7 +13,7 @@ data:
       zeroCapacityNode: false
       locks:
         owners: -1
-        reliability: consistent  
+        reliability: consistent
 
   infinispan.xml: |-
     <infinispan
@@ -140,7 +140,7 @@ data:
             </security>
             <data-sources>
               <data-source name="ds" jndi-name="jdbc/datasource" statistics="true">
-                  <connection-factory driver="org.postgresql.Driver" username="${env.DB_USER:keycloak}" password="${env.DB_PASSWORD:password}" url="jdbc:postgresql://${env.DB_ADDR:postgres}:${env.DB_PORT:26257}/${env.DB_DATABASE:keycloak}${env.JDBC_PARAMS_IS:}" new-connection-sql="SELECT 1" transaction-isolation="READ_COMMITTED">
+                  <connection-factory driver="org.postgresql.Driver" username="${env.DB_USER:keycloak}" password="${env.DB_PASSWORD:password}" url="jdbc:postgresql://${  }:${env.DB_PORT:26257}/${env.DB_DATABASE:keycloak}${env.JDBC_PARAMS_IS:}" new-connection-sql="SELECT 1" transaction-isolation="READ_COMMITTED">
                     <connection-property name="name">value</connection-property>
                   </connection-factory>
                   <connection-pool initial-size="1" max-size="10"  min-size="3" background-validation="1000" idle-removal="1" blocking-timeout="1000" leak-detection="10000"/>

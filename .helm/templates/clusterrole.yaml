@@ -1,7 +1,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: keycloak-{{ .Values.global.env }}
+  name: keycloak-{{ .Values.werf.env }}
   namespace: {{ .Release.Namespace | quote }}
 rules:
   - apiGroups: ["certificates.k8s.io"]
